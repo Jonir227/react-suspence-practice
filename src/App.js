@@ -1,14 +1,35 @@
 import React, { Component, unstable_Suspense as Suspense } from 'react';
+import { connect } from 'react-redux';
 import { List } from './components';
+import { selectListType } from './rootReducer';
+import { listType as LIST_TYPE } from './constants';
 
 class App extends Component {
+  onClickListType = type => () => {
+    this.props.selectListType(type);
+  };
+
   render() {
+    const { onClickListType } = this;
+    const { listType } = this.props;
     return (
-      <Suspense maxDuration={100} fallback={<div>로딩중</div>}>
-        <List />
-      </Suspense>
+      <>
+        {Object.entries(LIST_TYPE).map(([k, v]) => (
+          <button onClick={onClickListType(v)}>{v}</button>
+        ))}
+        <Suspense maxDuration={1500} fallback={<div>로딩중</div>}>
+          <List listType={listType} />
+        </Suspense>
+      </>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  ...state.AppState,
+});
+
+export default connect(
+  mapStateToProps,
+  { selectListType },
+)(App);
