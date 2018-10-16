@@ -17,6 +17,7 @@ class App extends Component {
         {Object.entries(LIST_TYPE).map(([k, v]) => (
           <button onClick={onClickListType(v)}>{v}</button>
         ))}
+        <div style={{ color: 'red' }}>{listType}</div>
         <Suspense maxDuration={1500} fallback={<div>로딩중</div>}>
           <List listType={listType} />
         </Suspense>
