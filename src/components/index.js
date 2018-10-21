@@ -1,3 +1,4 @@
-import List from './List';
+import List from "./List";
+import DetailPage from "./DetailPage";
 
-export { List };
+export { List, DetailPage };
