@@ -1,11 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import styled from "styled-components";
 
-export default class DetailPage extends Component {
+const AlbumName = styled.div`
+  color: white;
+`;
+
+class DetailPage extends Component {
   render() {
-    return (
-      <div>
-        hi
-      </div>
-    )
+    return <AlbumName>hi</AlbumName>;
   }
 }
+
+export default DetailPage;

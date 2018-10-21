@@ -1,30 +1,9 @@
 import React, { unstable_Suspense as Suspense } from "react";
 import { createResource } from "react-cache";
 import styled from "styled-components";
-import axios from "axios";
 
+import { albumSearchResult } from "../apis";
 import { cache } from "../cache";
-import key from "../key";
-
-const albumSearchResult = createResource(albumName =>
-  axios.get("http://ws.audioscrobbler.com/2.0/", {
-    params: {
-      method: "album.search",
-      api_key: key.api_key,
-      album: albumName,
-      format: "json"
-    }
-  })
-);
-
-const albumImg = createResource(
-  imgSrc =>
-    new Promise(resolve => {
-      const img = new Image();
-      img.src = imgSrc;
-      img.onload = () => resolve(imgSrc);
-    })
-);
 
 const ListItemWrapper = styled.div`
   display: flex;
@@ -55,6 +34,15 @@ const Loader = styled(ListItemWrapper)`
   justify-content: center;
   align-items: center;
 `;
+
+const albumImg = createResource(
+  imgSrc =>
+    new Promise(resolve => {
+      const img = new Image();
+      img.src = imgSrc;
+      img.onload = () => resolve(imgSrc);
+    })
+);
 
 const ListItem = ({ name, artist, image, onClickList }) => {
   const img = albumImg.read(cache, image[2]["#text"]);
